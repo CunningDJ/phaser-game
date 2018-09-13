@@ -13,10 +13,11 @@ var sprite = {
 };
 
 var WALK_SPEED = 160;
-var RUN_SPEED_BOOST = 1.5; 
-var JUMP_SPEED = 800;   //330
+var RUN_SPEED_BOOST = 2.5;
+var JUMP_SPEED = 800;
+var JUMP_SPEED_BOOST = 1.2;
 var PLAYER_BOUNCE = 0.1;
-var GRAVITY = 1100; //300
+var GRAVITY = 1100;
 
 // globals
 var platforms;
@@ -117,6 +118,8 @@ function create ()
 function update ()
 {
     var playerVx;
+    var playerVy;
+    var jumping = (cursors.up.isDown && player.body.touching.down);
 
     if (cursors.left.isDown) {
         playerVx = -WALK_SPEED;
@@ -132,15 +135,19 @@ function update ()
         player.anims.play('turn');
     }
 
-    //if (game.input.keyboard.isDown(Phaser.Input.Keyboard.shift)) {
+    if (jumping) {
+        playerVy = -JUMP_SPEED;
+    }
+
     if (cursors.shift.isDown) {
         playerVx *= RUN_SPEED_BOOST;
+        playerVy *= JUMP_SPEED_BOOST;
     }
     
+    if (jumping) {
+        player.setVelocityY(playerVy);
+    }
+
 
     player.setVelocityX(playerVx);
-
-    if (cursors.up.isDown && player.body.touching.down) {
-        player.setVelocityY(-JUMP_SPEED);
-    }
 }
