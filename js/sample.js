@@ -57,7 +57,7 @@ function preload ()
     this.load.image(image.STAR, ut.img('star.png'));
     this.load.spritesheet(
         sprite.DUDE, 
-        ut.img('dude.png'),
+        ut.spr('dude.png'),
         { frameWidth: 32, frameHeight: 48 }
     );
 }
